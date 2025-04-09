@@ -1,5 +1,7 @@
 package cris.julian.sdg_biblioteca.model;
 
+import java.util.Date;
+
 public class Libro {
 
     private static int contadorId = 1;
@@ -10,7 +12,7 @@ public class Libro {
     private String autor;
     private boolean prestado;
 
-    public Libro(String titulo, String autor, String isbn) {
+    public Libro(int i, String titulo, String autor, int i1, int i2, int i3, String isbn, boolean b, Date date, Date date1) {
         this.id = contadorId++; // Genera un ID único
         this.titulo = titulo;
         this.autor = autor;

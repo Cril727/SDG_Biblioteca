@@ -1,11 +1,13 @@
 package cris.julian.sdg_biblioteca.model;
 
+import java.util.Date;
+
 public class LibroNoFiccion extends Libro {
     private String areaTematica;
     private String PublicoObjetivo;
 
     public LibroNoFiccion(String titulo, String autor, String isbn, String areaTematica, String publicoObjetivo) {
-        super(titulo, autor, isbn);
+        super(1, titulo, autor, 43, 300, 300, isbn, true, new Date(System.currentTimeMillis() - 86400000), new Date(System.currentTimeMillis() + 172800000));
         this.areaTematica = areaTematica;
         PublicoObjetivo = publicoObjetivo;
     }
