@@ -23,6 +23,21 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Cril727"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Cril727/SDG_Biblioteca",
+    "accountId": "0e9e9b09-6b8f-4cfa-8186-c32011a7626e"
+  }
+}]]></component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
@@ -50,6 +65,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "TomEE Server.TomEE 11.0.5.executor": "Run",
     "Tomcat Server.Tomcat 9.0.102.executor": "Run",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
@@ -177,7 +193,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1744165646118</updated>
-      <workItem from="1744165647182" duration="6755000" />
+      <workItem from="1744165647182" duration="7989000" />
     </task>
     <servers />
   </component>
