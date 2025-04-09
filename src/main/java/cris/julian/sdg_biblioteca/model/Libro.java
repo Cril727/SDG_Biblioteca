@@ -24,8 +24,8 @@ public class Libro {
     }
 
     // Constructor para compatibilidad con código existente
-    public Libro(int id, String titulo, String autor, int anioPublicacion, int paginas, int precio,
-                 String isbn, boolean prestado, Date fechaPrestamo, Date fechaDevolucion) {
+    public Libro(int id, String titulo, String autor, int anioPublicacion,
+                 String isbn, boolean prestado) {
         this.id = contadorId++; // Genera un ID único
         this.titulo = titulo;
         this.autor = autor;

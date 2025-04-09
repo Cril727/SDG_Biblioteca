@@ -9,7 +9,7 @@ public class LibroManager {
 
     private LibroManager() {
         this.libros = new ArrayList<>();
-        // Inicializar con datos de Inventario si existe
+
         if (Inventario.getLibroList() != null && !Inventario.getLibroList().isEmpty()) {
             this.libros.addAll(Inventario.getLibroList());
         }

@@ -40,24 +40,12 @@ public class Prestamo {
         return nombrePrestador;
     }
 
-    public void setNombrePrestador(String nombrePrestador) {
-        this.nombrePrestador = nombrePrestador;
-    }
-
     public Date getFechaPrestamo() {
         return fechaPrestamo;
     }
 
-    public void setFechaPrestamo(Date fechaPrestamo) {
-        this.fechaPrestamo = fechaPrestamo;
-    }
-
     public Date getFechaLimite() {
         return fechaLimite;
-    }
-
-    public void setFechaLimite(Date fechaLimite) {
-        this.fechaLimite = fechaLimite;
     }
 
     public Date getFechaDevolucion() {

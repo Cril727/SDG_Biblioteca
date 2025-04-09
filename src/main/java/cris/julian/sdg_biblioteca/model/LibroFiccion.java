@@ -1,6 +1,5 @@
 package cris.julian.sdg_biblioteca.model;
 
-import java.util.Date;
 
 public class LibroFiccion extends Libro {
     private String genero;
