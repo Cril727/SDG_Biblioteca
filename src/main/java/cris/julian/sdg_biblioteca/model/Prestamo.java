@@ -1,105 +1,90 @@
 package cris.julian.sdg_biblioteca.model;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Prestamo {
-
-    private String isbn;
+    private int id;
     private Libro libro;
     private String nombrePrestador;
     private Date fechaPrestamo;
     private Date fechaLimite;
     private Date fechaDevolucion;
+    private String observaciones;
 
-    public Prestamo(String isbn, Libro libro, String nombrePrestador, Date fechaPrestamo, Date fechaLimite, Date fechaDevolucion) {
-        this.isbn = isbn;
+    public Prestamo(int id, Libro libro, String nombrePrestador, Date fechaPrestamo, Date fechaLimite, Date fechaDevolucion) {
+        this.id = id;
         this.libro = libro;
         this.nombrePrestador = nombrePrestador;
         this.fechaPrestamo = fechaPrestamo;
         this.fechaLimite = fechaLimite;
         this.fechaDevolucion = fechaDevolucion;
-
-        libro.setPrestado(true);
     }
 
+    public int getId() {
+        return id;
+    }
 
-    //Getters and Setters
-
-
-    public String getIsbn() {
-        return isbn;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Libro getLibro() {
         return libro;
     }
 
-    public String getNombrePrestador() {
-        return nombrePrestador;
-    }
-
-    public Date getFechaPrestamo() {
-        return fechaPrestamo;
-    }
-
-    public Date getFechaLimite() {
-        return fechaLimite;
-    }
-
-    public Date getFechaDevolucion() {
-        return fechaDevolucion;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
     public void setLibro(Libro libro) {
         this.libro = libro;
+    }
+
+    public String getNombrePrestador() {
+        return nombrePrestador;
     }
 
     public void setNombrePrestador(String nombrePrestador) {
         this.nombrePrestador = nombrePrestador;
     }
 
+    public Date getFechaPrestamo() {
+        return fechaPrestamo;
+    }
+
     public void setFechaPrestamo(Date fechaPrestamo) {
         this.fechaPrestamo = fechaPrestamo;
+    }
+
+    public Date getFechaLimite() {
+        return fechaLimite;
     }
 
     public void setFechaLimite(Date fechaLimite) {
         this.fechaLimite = fechaLimite;
     }
 
+    public Date getFechaDevolucion() {
+        return fechaDevolucion;
+    }
+
     public void setFechaDevolucion(Date fechaDevolucion) {
         this.fechaDevolucion = fechaDevolucion;
     }
 
-    //Es Activo
-    public boolean isActivo() {
-        return fechaDevolucion == null;
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public boolean isDevuelto() {
+        return fechaDevolucion != null;
     }
 
     public boolean isVencido() {
-        if (!isActivo()) {
+        if (isDevuelto()) {
             return false;
         }
         Date hoy = new Date();
-        return hoy.after(fechaLimite);
+        return fechaLimite.before(hoy);
     }
-
-
-    @Override
-    public String toString() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        return "Préstamo ID = " + isbn +
-                "\nLibro = " + libro.getTitulo() + " (" + libro.getIsbn() + ")" +
-                "\nPrestador = " + nombrePrestador +
-                "\nFecha de Préstamo = " + dateFormat.format(fechaPrestamo) +
-                "\nFecha Límite = " + dateFormat.format(fechaLimite) +
-                "\nFecha de Devolución = " + (fechaDevolucion != null ? dateFormat.format(fechaDevolucion) : "No devuelto") +
-                "\nEstado = " + (isActivo() ? (isVencido() ? "Vencido" : "Activo") : "Devuelto");
-    }
-
 }

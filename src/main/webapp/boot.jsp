@@ -5,10 +5,6 @@
     <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
 </head>
 <body>
-
-<h1>Mi página con burbuja de chat 🤖</h1>
-<p>Haz clic en la burbujita abajo a la derecha para hablar con el bot.</p>
-
 <script>
   window.addEventListener("load", function () {
     window.botpress.init({

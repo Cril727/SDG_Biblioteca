@@ -11,13 +11,27 @@ public class Libro {
     private String titulo;
     private String autor;
     private boolean prestado;
+    private String editorial;
+    private int anioPublicacion;
+    private String descripcion;
 
-    public Libro(int i, String titulo, String autor, int i1, int i2, int i3, String isbn, boolean b, Date date, Date date1) {
+    public Libro(String titulo, String autor, String isbn) {
         this.id = contadorId++; // Genera un ID único
         this.titulo = titulo;
         this.autor = autor;
         this.isbn = isbn;
         this.prestado = false;
+    }
+
+    // Constructor para compatibilidad con código existente
+    public Libro(int id, String titulo, String autor, int anioPublicacion, int paginas, int precio,
+                 String isbn, boolean prestado, Date fechaPrestamo, Date fechaDevolucion) {
+        this.id = contadorId++; // Genera un ID único
+        this.titulo = titulo;
+        this.autor = autor;
+        this.isbn = isbn;
+        this.anioPublicacion = anioPublicacion;
+        this.prestado = prestado;
     }
 
     // Getters y Setters
@@ -42,6 +56,18 @@ public class Libro {
         return prestado;
     }
 
+    public String getEditorial() {
+        return editorial;
+    }
+
+    public int getAnioPublicacion() {
+        return anioPublicacion;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
@@ -58,9 +84,20 @@ public class Libro {
         this.prestado = prestado;
     }
 
+    public void setEditorial(String editorial) {
+        this.editorial = editorial;
+    }
+
+    public void setAnioPublicacion(int anioPublicacion) {
+        this.anioPublicacion = anioPublicacion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     @Override
     public String toString() {
         return "Libro ID=" + id + ", Título='" + titulo + "', Autor='" + autor + "', ISBN='" + isbn + "', Prestado=" + prestado;
     }
-
 }

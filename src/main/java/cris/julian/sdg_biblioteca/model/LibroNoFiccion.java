@@ -4,12 +4,12 @@ import java.util.Date;
 
 public class LibroNoFiccion extends Libro {
     private String areaTematica;
-    private String PublicoObjetivo;
+    private String publicoObjetivo;
 
     public LibroNoFiccion(String titulo, String autor, String isbn, String areaTematica, String publicoObjetivo) {
-        super(1, titulo, autor, 43, 300, 300, isbn, true, new Date(System.currentTimeMillis() - 86400000), new Date(System.currentTimeMillis() + 172800000));
+        super(titulo, autor, isbn);
         this.areaTematica = areaTematica;
-        PublicoObjetivo = publicoObjetivo;
+        this.publicoObjetivo = publicoObjetivo;
     }
 
     public String getAreaTematica() {
@@ -17,7 +17,7 @@ public class LibroNoFiccion extends Libro {
     }
 
     public String getPublicoObjetivo() {
-        return PublicoObjetivo;
+        return publicoObjetivo;
     }
 
     public void setAreaTematica(String areaTematica) {
@@ -25,8 +25,6 @@ public class LibroNoFiccion extends Libro {
     }
 
     public void setPublicoObjetivo(String publicoObjetivo) {
-        PublicoObjetivo = publicoObjetivo;
+        this.publicoObjetivo = publicoObjetivo;
     }
 }
-
-

@@ -1,18 +1,20 @@
 package cris.julian.sdg_biblioteca.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LibroManager {
-
     private static LibroManager instance;
-    private final ArrayList<Libro> libros;
+    private final List<Libro> libros;
 
-    // Constructor privado para el patrón Singleton
     private LibroManager() {
         this.libros = new ArrayList<>();
+        // Inicializar con datos de Inventario si existe
+        if (Inventario.getLibroList() != null && !Inventario.getLibroList().isEmpty()) {
+            this.libros.addAll(Inventario.getLibroList());
+        }
     }
 
-    // Método para obtener la instancia única del gestor
     public static LibroManager getInstance() {
         if (instance == null) {
             instance = new LibroManager();
@@ -20,17 +22,16 @@ public class LibroManager {
         return instance;
     }
 
-    // Agregar libro
     public void agregarLibro(Libro libro) {
         libros.add(libro);
+        // También agregar al inventario si es necesario
+        Inventario.anadirLibro(libro);
     }
 
-    // Listar todos los libros
-    public ArrayList<Libro> listarLibros() {
-        return libros;
+    public List<Libro> listarLibros() {
+        return new ArrayList<>(libros);
     }
 
-    // Buscar libro por ID
     public Libro buscarLibroPorId(int id) {
         for (Libro libro : libros) {
             if (libro.getId() == id) {
@@ -40,18 +41,12 @@ public class LibroManager {
         return null;
     }
 
-    // Eliminar libro por ID
     public boolean eliminarLibroPorId(int id) {
-        return libros.removeIf(libro -> libro.getId() == id);
-    }
-
-    // Actualizar libro por ID
-    public void actualizarLibro(int id, Libro libroActualizado) {
-        for (int i = 0; i < libros.size(); i++) {
-            if (libros.get(i).getId() == id) {
-                libros.set(i, libroActualizado);
-                break;
-            }
+        Libro libro = buscarLibroPorId(id);
+        if (libro != null && !libro.isPrestado()) {
+            libros.remove(libro);
+            return true;
         }
+        return false;
     }
 }

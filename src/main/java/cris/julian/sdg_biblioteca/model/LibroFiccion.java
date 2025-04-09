@@ -7,7 +7,7 @@ public class LibroFiccion extends Libro {
     private int premiosLiterarios;
 
     public LibroFiccion(String titulo, String autor, String isbn, String genero, int premiosLiterarios) {
-        super(1, titulo, autor, 43, 300, 300, isbn, true, new Date(System.currentTimeMillis() - 86400000), new Date(System.currentTimeMillis() + 172800000)); // ✔️ No necesitas pasar el ID
+        super(titulo, autor, isbn);
         this.genero = genero;
         this.premiosLiterarios = premiosLiterarios;
     }
@@ -16,7 +16,7 @@ public class LibroFiccion extends Libro {
         return genero;
     }
 
-    public int getPremiosLiterarios() {
+    public int getPremios() {
         return premiosLiterarios;
     }
 
@@ -24,7 +24,7 @@ public class LibroFiccion extends Libro {
         this.genero = genero;
     }
 
-    public void setPremiosLiterarios(int premiosLiterarios) {
+    public void setPremios(int premiosLiterarios) {
         this.premiosLiterarios = premiosLiterarios;
     }
 }

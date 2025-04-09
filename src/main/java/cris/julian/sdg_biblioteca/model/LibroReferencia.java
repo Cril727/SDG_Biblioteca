@@ -7,7 +7,7 @@ public class LibroReferencia extends Libro {
     private boolean soloConsulta;
 
     public LibroReferencia(String titulo, String autor, String isbn, String campoAcademico, boolean soloConsulta) {
-        super(1, titulo, autor, 43, 300, 300, isbn, true, new Date(System.currentTimeMillis() - 86400000), new Date(System.currentTimeMillis() + 172800000));
+        super(titulo, autor, isbn);
         this.campoAcademico = campoAcademico;
         this.soloConsulta = soloConsulta;
     }
