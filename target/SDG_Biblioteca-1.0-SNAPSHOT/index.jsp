@@ -19,29 +19,6 @@
   LibroManager libroManager = LibroManager.getInstance();
   PrestamoManager prestamosManager = PrestamoManager.getInstance();
 
-  // Inicializar con algunos datos si está vacío
-  if (libroManager.listarLibros().isEmpty()) {
-    // Crear algunos libros de ejemplo
-    LibroFiccion libro1 = new LibroFiccion("Cien años de soledad", "Gabriel García Márquez", "978-0307474728", "novela", 2);
-    libro1.setEditorial("Vintage Español");
-    libro1.setAnioPublicacion(1967);
-    libro1.setDescripcion("Una de las obras maestras de la literatura latinoamericana.");
-
-    LibroNoFiccion libro2 = new LibroNoFiccion("Sapiens: De animales a dioses", "Yuval Noah Harari", "978-8499926223", "historia", "general");
-    libro2.setEditorial("Debate");
-    libro2.setAnioPublicacion(2014);
-    libro2.setDescripcion("Un recorrido por la historia de la humanidad.");
-
-    LibroReferencia libro3 = new LibroReferencia("Diccionario de la lengua española", "Real Academia Española", "978-8467041897", "linguistica", true);
-    libro3.setEditorial("Espasa");
-    libro3.setAnioPublicacion(2014);
-    libro3.setDescripcion("Diccionario oficial de la lengua española.");
-
-    libroManager.agregarLibro(libro1);
-    libroManager.agregarLibro(libro2);
-    libroManager.agregarLibro(libro3);
-  }
-
   // Obtener listas para mostrar en la página
   List<Libro> libros = libroManager.listarLibros();
   List<Prestamo> prestamosActivos = prestamosManager.listarPrestamosActivos();

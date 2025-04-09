@@ -24,7 +24,7 @@ public class LibroManager {
 
     public void agregarLibro(Libro libro) {
         libros.add(libro);
-        // También agregar al inventario si es necesario
+
         Inventario.anadirLibro(libro);
     }
 

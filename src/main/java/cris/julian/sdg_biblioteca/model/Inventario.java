@@ -8,11 +8,36 @@ public class Inventario {
     static List<Libro> libroList = new ArrayList<>();
 
     static {
-        libroList.add(new Libro(1, "100 años de soledad", "Gabriel", 43, 300, 300,"la que sea", true, new Date(System.currentTimeMillis() - 86400000), new Date(System.currentTimeMillis() + 172800000)));
-        libroList.add(new Libro(2, "Ama y no sufras", "Walter Riso",6 , 250, 240,"la que sea", false, new Date(System.currentTimeMillis() - 172800000), new Date(System.currentTimeMillis() + 172800000)));
-        libroList.add(new Libro(3, "El sol y la Arcilla", "María Lopez",10 , 2018, 300,"Ediciones Andinas", true, new Date(System.currentTimeMillis() - 172800000), new Date(System.currentTimeMillis() + 259200000)));
-        libroList.add(new Libro(4, "Camino de vida", "Juan Parez",12 , 2020, 190,"Editorial Terracota", false, new Date(System.currentTimeMillis() - 172800000), new Date(System.currentTimeMillis() + 172800000)));
-        libroList.add(new Libro(5, "Ama y no sufras", "Walter Riso",6 , 2015, 350,"la que sea", false, new Date(System.currentTimeMillis() - 172800000), new Date(System.currentTimeMillis() + 172800000)));
+        // Crear libros de ficción
+        LibroFiccion libro1 = new LibroFiccion("1984", "George Orwell", "978-0451524935", "novela", 2);
+        libro1.setEditorial("Ficción");
+        libro1.setAnioPublicacion(1949);
+        libro1.setDescripcion("Una distopía que retrata un futuro totalitario y vigilado.");
+
+        LibroFiccion libro2 = new LibroFiccion("El Principito", "Antoine de Saint-Exupéry", "978-0156012195", "novela", 1);
+        libro2.setEditorial("Ficción");
+        libro2.setAnioPublicacion(1943);
+        libro2.setDescripcion("Una fábula sobre un pequeño príncipe que viaja por diferentes planetas.");
+
+
+        // Crear libros de no ficción
+        LibroNoFiccion libro3 = new LibroNoFiccion("Una breve historia del tiempo", "Stephen Hawking", "978-0553380163", "ciencia", "general");
+        libro3.setEditorial("No ficción");
+        libro3.setAnioPublicacion(1988);
+        libro3.setDescripcion("Un libro de divulgación científica sobre cosmología.");
+
+
+        LibroNoFiccion libro4 = new LibroNoFiccion("Sapiens", "Yuval Noah Harari", "978-0062316097", "historia", "general");
+        libro4.setEditorial("No ficción");
+        libro4.setAnioPublicacion(2014);
+        libro4.setDescripcion("Un recorrido por la historia de la humanidad.");
+
+
+        // Añadir todos los libros a la lista
+        libroList.add(libro1);
+        libroList.add(libro2);
+        libroList.add(libro3);
+        libroList.add(libro4);
 
     }
 
