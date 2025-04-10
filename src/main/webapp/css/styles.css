@@ -65,9 +65,7 @@ body {
 }
 
 /* Estilos para acciones en tablas */
-.table-actions .btn {
-    margin-right: 5px;
-}
+
 
 .table-actions .btn:last-child {
     margin-right: 0;

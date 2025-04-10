@@ -6,10 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inventario de Libros - Biblioteca Municipal</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <jsp:include page="../cdns.jsp"></jsp:include>
   <!-- Custom CSS -->
   <link rel="stylesheet" href="../css/styles.css">
 </head>
@@ -99,36 +96,8 @@
       </a>
     </div>
 
-    <!-- Filtros -->
-    <div class="card mb-4">
-      <div class="card-body">
-        <form action="listar.jsp" method="get" class="row g-3">
-          <div class="col-md-4">
-            <label for="filtroTitulo" class="form-label">Título</label>
-            <input type="text" class="form-control" id="filtroTitulo" name="titulo" placeholder="Buscar por título" value="<%= filtroTitulo %>">
-          </div>
-          <div class="col-md-3">
-            <label for="filtroAutor" class="form-label">Autor</label>
-            <input type="text" class="form-control" id="filtroAutor" name="autor" placeholder="Buscar por autor" value="<%= filtroAutor %>">
-          </div>
-          <div class="col-md-3">
-            <label for="filtroCategoria" class="form-label">Categoría</label>
-            <select class="form-select" id="filtroCategoria" name="categoria">
-              <option value="" <%= filtroCategoria.isEmpty() ? "selected" : "" %>>Todas</option>
-              <option value="ficcion" <%= filtroCategoria.equals("ficcion") ? "selected" : "" %>>Ficción</option>
-              <option value="noficcion" <%= filtroCategoria.equals("noficcion") ? "selected" : "" %>>No Ficción</option>
-              <option value="referencia" <%= filtroCategoria.equals("referencia") ? "selected" : "" %>>Referencia</option>
-            </select>
-          </div>
-          <div class="col-md-2 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary w-100">Filtrar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
     <div class="table-responsive">
-      <table class="table table-striped table-hover">
+      <table id="tablaLibros" class="table table-striped table-hover">
         <thead class="table-dark">
         <tr>
           <th>ID</th>
@@ -217,62 +186,46 @@
 </section>
 
 <!-- Footer -->
-<footer class="bg-dark text-white py-4">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4 mb-4 mb-md-0">
-        <h5 class="mb-3">BiblioTech</h5>
-        <p class="mb-0">Sistema de gestión para bibliotecas municipales, desarrollado para mejorar la experiencia de usuarios y administradores.</p>
-      </div>
-      <div class="col-md-2 mb-4 mb-md-0">
-        <h5 class="mb-3">Enlaces</h5>
-        <ul class="list-unstyled">
-          <li><a href="../index.jsp" class="text-white-50">Inicio</a></li>
-          <li><a href="listar.jsp" class="text-white-50">Libros</a></li>
-          <li><a href="../prestamos/listar.jsp" class="text-white-50">Préstamos</a></li>
-        </ul>
-      </div>
-      <div class="col-md-3 mb-4 mb-md-0">
-        <h5 class="mb-3">Recursos</h5>
-        <ul class="list-unstyled">
-          <li><a href="#" class="text-white-50">Documentación</a></li>
-          <li><a href="#" class="text-white-50">Tutoriales</a></li>
-          <li><a href="#" class="text-white-50">Preguntas Frecuentes</a></li>
-          <li><a href="#" class="text-white-50">Soporte</a></li>
-        </ul>
-      </div>
-      <div class="col-md-3">
-        <h5 class="mb-3">Contacto</h5>
-        <ul class="list-unstyled text-white-50">
-          <li><i class="bi bi-geo-alt me-2"></i> Biblioteca Municipal de Duitama</li>
-          <li><i class="bi bi-building me-2"></i> Calle Principal #123</li>
-          <li><i class="bi bi-envelope me-2"></i> contacto@biblioteca.gov.co</li>
-          <li><i class="bi bi-telephone me-2"></i> +57 (8) 123-4567</li>
-        </ul>
-      </div>
-    </div>
-    <hr class="my-4 bg-light">
-    <div class="text-center text-white-50">
-      <p class="mb-0">© <%= new java.util.Date().getYear() + 1900 %> Sistema de Gestión de Biblioteca Municipal. Todos los derechos reservados.</p>
-    </div>
-  </div>
-</footer>
+<jsp:include page="../footer.jsp"></jsp:include>
+
 <jsp:include page="../boot.jsp"></jsp:include>
 <!-- Bootstrap JS Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- JavaScript para toasts -->
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  $(document).ready(function () {
+    $("#tablaLibros").DataTable({
+      buttons: [
+        {
+          extend: "colvis",
+          text: "Columnas Visibles"
+        },
+        "excel",
+        "pdf",
+        "print",
+        "copy"
+      ],
+      dom: "Bfrtip",
+      responsive: true,
+      destroy: true,
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+      },
+      responsive: true,
+      pageLength: 10,
+    });
+
     // Auto-ocultar los mensajes toast después de 5 segundos
-    setTimeout(function() {
-      var toastElements = document.querySelectorAll('.toast');
-      toastElements.forEach(function(toast) {
-        var bsToast = new bootstrap.Toast(toast);
+    setTimeout(function () {
+      $('.toast').each(function () {
+        var bsToast = bootstrap.Toast.getOrCreateInstance(this);
         bsToast.hide();
       });
     }, 5000);
   });
+
 </script>
+
 </body>
 </html>

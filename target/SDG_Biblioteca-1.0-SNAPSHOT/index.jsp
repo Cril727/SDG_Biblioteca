@@ -6,25 +6,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistema de Gestión de Biblioteca Municipal</title>
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-
+  <jsp:include page="cdns.jsp"></jsp:include>
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 <%
-
+  // Obtener instancias de los managers
   LibroManager libroManager = LibroManager.getInstance();
   PrestamoManager prestamosManager = PrestamoManager.getInstance();
 
-
+  // Obtener listas para mostrar en la página
   List<Libro> libros = libroManager.listarLibros();
   List<Prestamo> prestamosActivos = prestamosManager.listarPrestamosActivos();
   List<Prestamo> prestamosDevueltos = prestamosManager.listarPrestamosDevueltos();
 
-
+  // Contar libros por categoría
   int contadorFiccion = 0;
   int contadorNoFiccion = 0;
   int contadorReferencia = 0;
@@ -40,7 +37,7 @@
   }
 %>
 
-
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-library">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="index.jsp">
@@ -66,7 +63,7 @@
   </div>
 </nav>
 
-
+<!-- Toast para mensajes -->
 <% if (session.getAttribute("mensaje") != null) { %>
 <div class="toast-container">
   <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
@@ -85,7 +82,7 @@
 %>
 <% } %>
 
-
+<!-- Carousel -->
 <div id="carouselLibros" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselLibros" data-bs-slide-to="0" class="active"></button>
@@ -125,7 +122,7 @@
   </button>
 </div>
 
-
+<!-- Quick Actions -->
 <section class="py-5">
   <div class="container d-flex flex-column align-items-center text-center">
     <h2 class="text-center mb-4">Acciones Rápidas</h2>
@@ -166,7 +163,7 @@
   </div>
 </section>
 
-
+<!-- Book Categories -->
 <section class="py-5 bg-light">
   <div class="container">
     <h2 class="text-center mb-4">Categorías de Libros</h2>
@@ -217,7 +214,7 @@
   </div>
 </section>
 
-
+<!-- Stats Section -->
 <section class="py-5 bg-primary text-white">
   <div class="container">
     <div class="row text-center">
@@ -250,57 +247,18 @@
   </div>
 </section>
 
-
-<footer class="bg-dark text-white py-4">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4 mb-4 mb-md-0">
-        <h5 class="mb-3">BiblioTech</h5>
-        <p class="mb-0">Sistema de gestión para bibliotecas municipales, desarrollado para mejorar la experiencia de usuarios y administradores.</p>
-      </div>
-      <div class="col-md-2 mb-4 mb-md-0">
-        <h5 class="mb-3">Enlaces</h5>
-        <ul class="list-unstyled">
-          <li><a href="index.jsp" class="text-white-50">Inicio</a></li>
-          <li><a href="libros/listar.jsp" class="text-white-50">Libros</a></li>
-          <li><a href="prestamos/listar.jsp" class="text-white-50">Préstamos</a></li>
-        </ul>
-      </div>
-      <div class="col-md-3 mb-4 mb-md-0">
-        <h5 class="mb-3">Recursos</h5>
-        <ul class="list-unstyled">
-          <li><a href="#" class="text-white-50">Documentación</a></li>
-          <li><a href="#" class="text-white-50">Tutoriales</a></li>
-          <li><a href="#" class="text-white-50">Preguntas Frecuentes</a></li>
-          <li><a href="#" class="text-white-50">Soporte</a></li>
-        </ul>
-      </div>
-      <div class="col-md-3">
-        <h5 class="mb-3">Contacto</h5>
-        <ul class="list-unstyled text-white-50">
-          <li><i class="bi bi-geo-alt me-2"></i> Biblioteca Municipal de Duitama</li>
-          <li><i class="bi bi-building me-2"></i> Calle Principal #123</li>
-          <li><i class="bi bi-envelope me-2"></i> contacto@biblioteca.gov.co</li>
-          <li><i class="bi bi-telephone me-2"></i> +57 (8) 123-4567</li>
-        </ul>
-      </div>
-    </div>
-    <hr class="my-4 bg-light">
-    <div class="text-center text-white-50">
-      <p class="mb-0">© <%= new java.util.Date().getYear() + 1900 %> Sistema de Gestión de Biblioteca Municipal. Todos los derechos reservados.</p>
-    </div>
-  </div>
-</footer>
+<!-- Footer -->
+<jsp:include page="footer.jsp"></jsp:include>
 
 <jsp:include page="boot.jsp"></jsp:include>
 
-
+<!-- Bootstrap JS Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-
+<!-- JavaScript para toasts -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-
+    // Auto-ocultar los mensajes toast después de 5 segundos
     setTimeout(function() {
       var toastElements = document.querySelectorAll('.toast');
       toastElements.forEach(function(toast) {
