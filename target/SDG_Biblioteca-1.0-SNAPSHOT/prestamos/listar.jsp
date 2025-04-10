@@ -1,0 +1,308 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.*, cris.julian.sdg_biblioteca.model.*"%>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Préstamos - Biblioteca Municipal</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<%
+
+  PrestamoManager prestamosManager = PrestamoManager.getInstance();
+
+
+  List<Prestamo> prestamosActivos = prestamosManager.listarPrestamosActivos();
+  List<Prestamo> prestamosDevueltos = prestamosManager.listarPrestamosDevueltos();
+
+
+  List<Prestamo> prestamosVencidos = new ArrayList<>();
+  for (Prestamo prestamo : prestamosActivos) {
+    if (prestamo.isVencido()) {
+      prestamosVencidos.add(prestamo);
+    }
+  }
+%>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-library">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="../index.jsp">
+      <i class="bi bi-book me-2"></i>
+      <span>BiblioTech</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="../index.jsp">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../libros/listar.jsp">Libros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="listar.jsp">Préstamos</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<% if (session.getAttribute("mensaje") != null) { %>
+<div class="toast-container">
+  <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header bg-<%= session.getAttribute("tipoMensaje") %> text-white">
+      <strong class="me-auto">Notificación</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <%= session.getAttribute("mensaje") %>
+    </div>
+  </div>
+</div>
+<%
+  session.removeAttribute("mensaje");
+  session.removeAttribute("tipoMensaje");
+%>
+<% } %>
+
+
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Gestión de Préstamos</h2>
+
+    <div class="d-flex justify-content-end mb-4">
+      <a href="../libros/listar.jsp" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i> Nuevo Préstamo
+      </a>
+    </div>
+
+    <ul class="nav nav-tabs mb-4" id="prestamosTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="activos-tab" data-bs-toggle="tab" data-bs-target="#activos" type="button" role="tab" aria-controls="activos" aria-selected="true">
+          Préstamos Activos <span class="badge bg-primary"><%= prestamosActivos.size() %></span>
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="vencidos-tab" data-bs-toggle="tab" data-bs-target="#vencidos" type="button" role="tab" aria-controls="vencidos" aria-selected="false">
+          Vencidos <span class="badge bg-danger"><%= prestamosVencidos.size() %></span>
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="historial-tab" data-bs-toggle="tab" data-bs-target="#historial" type="button" role="tab" aria-controls="historial" aria-selected="false">
+          Historial <span class="badge bg-secondary"><%= prestamosDevueltos.size() %></span>
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="prestamosTabsContent">
+
+      <div class="tab-pane fade show active" id="activos" role="tabpanel" aria-labelledby="activos-tab">
+        <% if (prestamosActivos.isEmpty()) { %>
+        <div class="alert alert-info">No hay préstamos activos actualmente.</div>
+        <% } else { %>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Libro</th>
+              <th>Usuario</th>
+              <th>Fecha Préstamo</th>
+              <th>Fecha Devolución</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+              for (Prestamo prestamo : prestamosActivos) {
+                if (!prestamo.isVencido()) {
+            %>
+            <tr>
+              <td><%= prestamo.getId() %></td>
+              <td><%= prestamo.getLibro().getTitulo() %></td>
+              <td><%= prestamo.getNombrePrestador() %></td>
+              <td><%= new java.text.SimpleDateFormat("dd/MM/yyyy").format(prestamo.getFechaPrestamo()) %></td>
+              <td><%= new java.text.SimpleDateFormat("dd/MM/yyyy").format(prestamo.getFechaLimite()) %></td>
+              <td><span class="badge bg-success">Al día</span></td>
+              <td>
+                <a href="devolver.jsp?id=<%= prestamo.getId() %>" class="btn btn-sm btn-primary">
+                  <i class="bi bi-arrow-return-left"></i> Devolver
+                </a>
+              </td>
+            </tr>
+            <%
+                }
+              }
+              if (prestamosActivos.size() == prestamosVencidos.size() && !prestamosActivos.isEmpty()) {
+            %>
+            <tr>
+              <td colspan="7" class="text-center">No hay préstamos activos al día.</td>
+            </tr>
+            <% } %>
+            </tbody>
+          </table>
+        </div>
+        <% } %>
+      </div>
+
+
+      <div class="tab-pane fade" id="vencidos" role="tabpanel" aria-labelledby="vencidos-tab">
+        <% if (prestamosVencidos.isEmpty()) { %>
+        <div class="alert alert-success">No hay préstamos vencidos actualmente.</div>
+        <% } else { %>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Libro</th>
+              <th>Usuario</th>
+              <th>Fecha Préstamo</th>
+              <th>Fecha Límite</th>
+              <th>Días de Retraso</th>
+              <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+              for (Prestamo prestamo : prestamosVencidos) {
+                long diff = new Date().getTime() - prestamo.getFechaLimite().getTime();
+                long diasRetraso = diff / (24 * 60 * 60 * 1000);
+            %>
+            <tr>
+              <td><%= prestamo.getId() %></td>
+              <td><%= prestamo.getLibro().getTitulo() %></td>
+              <td><%= prestamo.getNombrePrestador() %></td>
+              <td><%= new java.text.SimpleDateFormat("dd/MM/yyyy").format(prestamo.getFechaPrestamo()) %></td>
+              <td><%= new java.text.SimpleDateFormat("dd/MM/yyyy").format(prestamo.getFechaLimite()) %></td>
+              <td><span class="badge bg-danger"><%= diasRetraso %> días</span></td>
+              <td>
+                <a href="devolver.jsp?id=<%= prestamo.getId() %>" class="btn btn-sm btn-primary">
+                  <i class="bi bi-arrow-return-left"></i> Devolver
+                </a>
+              </td>
+            </tr>
+            <% } %>
+            </tbody>
+          </table>
+        </div>
+        <% } %>
+      </div>
+
+
+      <div class="tab-pane fade" id="historial" role="tabpanel" aria-labelledby="historial-tab">
+        <% if (prestamosDevueltos.isEmpty()) { %>
+        <div class="alert alert-info">No hay historial de préstamos.</div>
+        <% } else { %>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Libro</th>
+              <th>Usuario</th>
+              <th>Fecha Préstamo</th>
+              <th>Fecha Devolución</th>
+              <th>Estado</th>
+              <th>Observaciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for (Prestamo prestamo : prestamosDevueltos) { %>
+            <tr>
+              <td><%= prestamo.getId() %></td>
+              <td><%= prestamo.getLibro().getTitulo() %></td>
+              <td><%= prestamo.getNombrePrestador() %></td>
+              <td><%= new java.text.SimpleDateFormat("dd/MM/yyyy").format(prestamo.getFechaPrestamo()) %></td>
+              <td><%= new java.text.SimpleDateFormat("dd/MM/yyyy").format(prestamo.getFechaDevolucion()) %></td>
+              <td>
+                <% if (prestamo.getFechaDevolucion().after(prestamo.getFechaLimite())) { %>
+                <span class="badge bg-warning text-dark">Devuelto con retraso</span>
+                <% } else { %>
+                <span class="badge bg-info">Devuelto a tiempo</span>
+                <% } %>
+              </td>
+              <td><%= prestamo.getObservaciones() != null ? prestamo.getObservaciones() : "-" %></td>
+            </tr>
+            <% } %>
+            </tbody>
+          </table>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer class="bg-dark text-white py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-4 mb-md-0">
+        <h5 class="mb-3">BiblioTech</h5>
+        <p class="mb-0">Sistema de gestión para bibliotecas municipales, desarrollado para mejorar la experiencia de usuarios y administradores.</p>
+      </div>
+      <div class="col-md-2 mb-4 mb-md-0">
+        <h5 class="mb-3">Enlaces</h5>
+        <ul class="list-unstyled">
+          <li><a href="../index.jsp" class="text-white-50">Inicio</a></li>
+          <li><a href="../libros/listar.jsp" class="text-white-50">Libros</a></li>
+          <li><a href="listar.jsp" class="text-white-50">Préstamos</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3 mb-4 mb-md-0">
+        <h5 class="mb-3">Recursos</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-white-50">Documentación</a></li>
+          <li><a href="#" class="text-white-50">Tutoriales</a></li>
+          <li><a href="#" class="text-white-50">Preguntas Frecuentes</a></li>
+          <li><a href="#" class="text-white-50">Soporte</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h5 class="mb-3">Contacto</h5>
+        <ul class="list-unstyled text-white-50">
+          <li><i class="bi bi-geo-alt me-2"></i> Biblioteca Municipal de Duitama</li>
+          <li><i class="bi bi-building me-2"></i> Calle Principal #123</li>
+          <li><i class="bi bi-envelope me-2"></i> contacto@biblioteca.gov.co</li>
+          <li><i class="bi bi-telephone me-2"></i> +57 (8) 123-4567</li>
+        </ul>
+      </div>
+    </div>
+    <hr class="my-4 bg-light">
+    <div class="text-center text-white-50">
+      <p class="mb-0">© <%= new java.util.Date().getYear() + 1900 %> Sistema de Gestión de Biblioteca Municipal. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>
+<jsp:include page="../boot.jsp"></jsp:include>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+
+    setTimeout(function() {
+      var toastElements = document.querySelectorAll('.toast');
+      toastElements.forEach(function(toast) {
+        var bsToast = new bootstrap.Toast(toast);
+        bsToast.hide();
+      });
+    }, 5000);
+  });
+</script>
+</body>
+</html>
