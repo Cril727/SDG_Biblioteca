@@ -6,25 +6,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistema de Gestión de Biblioteca Municipal</title>
-  <!-- Bootstrap CSS -->
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-  <!-- Custom CSS -->
+
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 <%
-  // Obtener instancias de los managers
+
   LibroManager libroManager = LibroManager.getInstance();
   PrestamoManager prestamosManager = PrestamoManager.getInstance();
 
-  // Obtener listas para mostrar en la página
+
   List<Libro> libros = libroManager.listarLibros();
   List<Prestamo> prestamosActivos = prestamosManager.listarPrestamosActivos();
   List<Prestamo> prestamosDevueltos = prestamosManager.listarPrestamosDevueltos();
 
-  // Contar libros por categoría
+
   int contadorFiccion = 0;
   int contadorNoFiccion = 0;
   int contadorReferencia = 0;
@@ -40,7 +40,7 @@
   }
 %>
 
-<!-- Navbar -->
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-library">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="index.jsp">
@@ -66,7 +66,7 @@
   </div>
 </nav>
 
-<!-- Toast para mensajes -->
+
 <% if (session.getAttribute("mensaje") != null) { %>
 <div class="toast-container">
   <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
@@ -85,7 +85,7 @@
 %>
 <% } %>
 
-<!-- Carousel -->
+
 <div id="carouselLibros" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselLibros" data-bs-slide-to="0" class="active"></button>
@@ -125,7 +125,7 @@
   </button>
 </div>
 
-<!-- Quick Actions -->
+
 <section class="py-5">
   <div class="container d-flex flex-column align-items-center text-center">
     <h2 class="text-center mb-4">Acciones Rápidas</h2>
@@ -166,7 +166,7 @@
   </div>
 </section>
 
-<!-- Book Categories -->
+
 <section class="py-5 bg-light">
   <div class="container">
     <h2 class="text-center mb-4">Categorías de Libros</h2>
@@ -217,7 +217,7 @@
   </div>
 </section>
 
-<!-- Stats Section -->
+
 <section class="py-5 bg-primary text-white">
   <div class="container">
     <div class="row text-center">
@@ -250,7 +250,7 @@
   </div>
 </section>
 
-<!-- Footer -->
+
 <footer class="bg-dark text-white py-4">
   <div class="container">
     <div class="row">
@@ -294,13 +294,13 @@
 
 <jsp:include page="boot.jsp"></jsp:include>
 
-<!-- Bootstrap JS Bundle with Popper -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- JavaScript para toasts -->
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Auto-ocultar los mensajes toast después de 5 segundos
+
     setTimeout(function() {
       var toastElements = document.querySelectorAll('.toast');
       toastElements.forEach(function(toast) {
