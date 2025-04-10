@@ -255,18 +255,6 @@
 <!-- Bootstrap JS Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- JavaScript para toasts -->
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Auto-ocultar los mensajes toast después de 5 segundos
-    setTimeout(function() {
-      var toastElements = document.querySelectorAll('.toast');
-      toastElements.forEach(function(toast) {
-        var bsToast = new bootstrap.Toast(toast);
-        bsToast.hide();
-      });
-    }, 5000);
-  });
-</script>
+
 </body>
 </html>

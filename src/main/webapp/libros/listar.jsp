@@ -67,25 +67,6 @@
   </div>
 </nav>
 
-<!-- Toast para mensajes -->
-<% if (session.getAttribute("mensaje") != null) { %>
-<div class="toast-container">
-  <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header bg-<%= session.getAttribute("tipoMensaje") %> text-white">
-      <strong class="me-auto">Notificación</strong>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-      <%= session.getAttribute("mensaje") %>
-    </div>
-  </div>
-</div>
-<%
-  session.removeAttribute("mensaje");
-  session.removeAttribute("tipoMensaje");
-%>
-<% } %>
-
 <!-- Book Inventory -->
 <section class="py-5" id="inventario">
   <div class="container">
@@ -114,27 +95,16 @@
           if (libros != null && !libros.isEmpty()) {
             for (Libro libro : libros) {
               String categoria = "";
-              if (libro instanceof LibroFiccion) {
-                categoria = "Ficción";
-              } else if (libro instanceof LibroNoFiccion) {
-                categoria = "No Ficción";
-              } else if (libro instanceof LibroReferencia) {
-                categoria = "Referencia";
-              }
+              if (libro instanceof LibroFiccion) categoria = "Ficción";
+              else if (libro instanceof LibroNoFiccion) categoria = "No Ficción";
+              else if (libro instanceof LibroReferencia) categoria = "Referencia";
 
-              String badgeColor = "";
-              if (categoria.equals("Ficción")) {
-                badgeColor = "primary";
-              } else if (categoria.equals("No Ficción")) {
-                badgeColor = "info";
-              } else if (categoria.equals("Referencia")) {
-                badgeColor = "warning";
-              }
+              String badgeColor = categoria.equals("Ficción") ? "primary" :
+                      categoria.equals("No Ficción") ? "info" : "warning";
 
               String estadoBadgeColor = libro.isPrestado() ? "warning" : "success";
               String estadoTexto = libro.isPrestado() ? "Prestado" : "Disponible";
 
-              // Si es un libro de referencia y solo consulta, mostrar estado especial
               if (libro instanceof LibroReferencia && ((LibroReferencia) libro).isSoloConsulta()) {
                 estadoBadgeColor = "danger";
                 estadoTexto = "Solo Consulta";
@@ -152,7 +122,7 @@
               <a href="editar.jsp?id=<%= libro.getId() %>" class="btn btn-info">
                 <i class="bi bi-pencil"></i>
               </a>
-              <a href="eliminar.jsp?id=<%= libro.getId() %>" class="btn btn-danger" onclick="return confirm('¿Está seguro de eliminar este libro?')">
+              <a href="#" class="btn btn-danger" onclick="confirmarEliminacion(<%= libro.getId() %>)">
                 <i class="bi bi-trash"></i>
               </a>
               <% if (!libro.isPrestado() && !(libro instanceof LibroReferencia && ((LibroReferencia) libro).isSoloConsulta())) { %>
@@ -187,45 +157,64 @@
 
 <!-- Footer -->
 <jsp:include page="../footer.jsp"></jsp:include>
-
 <jsp:include page="../boot.jsp"></jsp:include>
-<!-- Bootstrap JS Bundle with Popper -->
+
+<!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- JavaScript para toasts -->
+<!-- DataTable -->
 <script>
   $(document).ready(function () {
     $("#tablaLibros").DataTable({
       buttons: [
-        {
-          extend: "colvis",
-          text: "Columnas Visibles"
-        },
-        "excel",
-        "pdf",
-        "print",
-        "copy"
+        { extend: "colvis", text: "Columnas Visibles" },
+        "excel", "pdf", "print", "copy"
       ],
       dom: "Bfrtip",
       responsive: true,
       destroy: true,
-      language: {
-        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
-      },
-      responsive: true,
-      pageLength: 10,
+      language: { url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json' },
+      pageLength: 10
     });
-
-    // Auto-ocultar los mensajes toast después de 5 segundos
-    setTimeout(function () {
-      $('.toast').each(function () {
-        var bsToast = bootstrap.Toast.getOrCreateInstance(this);
-        bsToast.hide();
-      });
-    }, 5000);
   });
 
+  function confirmarEliminacion(libroId) {
+    Swal.fire({
+      title: '¿Está seguro de eliminar este libro?',
+      text: 'Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = 'eliminar.jsp?id=' + libroId;
+      }
+    });
+  }
 </script>
+
+<%
+  String mensaje = (String) session.getAttribute("mensaje");
+  String tipoMensaje = (String) session.getAttribute("tipoMensaje");
+  if (mensaje != null && tipoMensaje != null) {
+%>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    Swal.fire({
+      title: "<%= mensaje %>",
+      icon: "<%= tipoMensaje %>",
+      confirmButtonText: "Aceptar"
+    });
+  });
+</script>
+<%
+    session.removeAttribute("mensaje");
+    session.removeAttribute("tipoMensaje");
+  }
+%>
 
 </body>
 </html>

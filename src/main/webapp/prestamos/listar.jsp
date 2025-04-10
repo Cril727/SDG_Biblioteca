@@ -54,25 +54,6 @@
   </div>
 </nav>
 
-<!-- Toast para mensajes -->
-<% if (session.getAttribute("mensaje") != null) { %>
-<div class="toast-container">
-  <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header bg-<%= session.getAttribute("tipoMensaje") %> text-white">
-      <strong class="me-auto">Notificación</strong>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-      <%= session.getAttribute("mensaje") %>
-    </div>
-  </div>
-</div>
-<%
-  session.removeAttribute("mensaje");
-  session.removeAttribute("tipoMensaje");
-%>
-<% } %>
-
 <!-- Loans Section -->
 <section class="py-5">
   <div class="container">
@@ -258,15 +239,28 @@
       $('#tablaVencidos').DataTable();
       $('#tablaHistorial').DataTable();
     });
-    // Ocultar toasts automáticamente
-    setTimeout(function () {
-      document.querySelectorAll('.toast').forEach(function (toast) {
-        var bsToast = bootstrap.Toast.getOrCreateInstance(toast);
-        bsToast.hide();
-      });
-    }, 5000);
   });
 </script>
+
+<%
+  String mensaje = (String) session.getAttribute("mensaje");
+  String tipoMensaje = (String) session.getAttribute("tipoMensaje");
+  if (mensaje != null && tipoMensaje != null) {
+%>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    Swal.fire({
+      title: "<%= mensaje %>",
+      icon: "<%= tipoMensaje %>",
+      confirmButtonText: "Aceptar"
+    });
+  });
+</script>
+<%
+    session.removeAttribute("mensaje");
+    session.removeAttribute("tipoMensaje");
+  }
+%>
 
 </body>
 </html>
