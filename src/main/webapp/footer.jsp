@@ -10,9 +10,7 @@
       <div class="col-md-3 mb-4 mb-md-0">
         <h5 class="mb-3">Enlaces</h5>
         <ul class="list-unstyled">
-          <li><a href="../index.jsp" class="text-white-50">Inicio</a></li>
-          <li><a href="listar.jsp" class="text-white-50">Libros</a></li>
-          <li><a href="../prestamos/listar.jsp" class="text-white-50">Préstamos</a></li>
+          <li><a href="https://github.com/Cril727/SDG_Biblioteca" class="text-white-50">Repositorio</a></li>
         </ul>
       </div>
       <div class="col-md-3">

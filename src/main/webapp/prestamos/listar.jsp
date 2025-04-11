@@ -60,8 +60,8 @@
     <div class="p-5 mb-4 bg-light rounded-3 ">
       <div class="p-5 mb-4 colorjump rounded-3">
         <div class="container-fluid py-5 text-center">
-          <h1 class="display-5 fw-bold">Lista de Libros</h1>
-          <p>Lista de Libros</p>
+          <h1 class="display-5 fw-bold">Lista de Prestamos</h1>
+          <p>Aqui se muestran los prestamos realizados</p>
         </div>
       </div>
     <div class="d-flex justify-content-end mb-4">
