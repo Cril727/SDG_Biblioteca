@@ -70,12 +70,23 @@
 <!-- Book Inventory -->
 <section class="py-5" id="inventario">
   <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2>Inventario de Libros</h2>
-      <a href="agregar.jsp" class="btn btn-primary">
-        <i class="bi bi-plus-lg"></i> Agregar Libro
-      </a>
+    <div class="p-5 mb-4 colorjump rounded-3">
+      <div class="container-fluid py-5 text-center">
+        <h1 class="display-5 fw-bold">Lista de Libros</h1>
+        <p>Lista de Libros</p>
+      </div>
     </div>
+
+
+    <a href="agregar.jsp" class="btn btn-primary">
+
+      <i class="bi bi-plus-lg"></i> Agregar Libro
+    </a>
+
+
+
+      <br>
+      <br>
 
     <div class="table-responsive">
       <table id="tablaLibros" class="table table-striped table-hover">

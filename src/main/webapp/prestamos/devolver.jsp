@@ -86,14 +86,18 @@
 </nav>
 
 <!-- Registrar Devolución Form -->
+<div class="p-5 mb-4 bg-light rounded-3 ">
 <section class="py-5">
   <div class="container">
+    <div class="p-5 mb-4 colorjump rounded-3">
+      <div class="container-fluid py-5 text-center">
+        <h1 class="display-5 fw-bold">Devolver Libro</h1>
+        <p>Formulario para de devolución.</p>
+      </div>
+    </div>
     <div class="row justify-content-center">
       <div class="col-lg-8">
         <div class="card shadow">
-          <div class="card-header bg-primary text-white">
-            <h3 class="card-title mb-0">Registrar Devolución</h3>
-          </div>
           <div class="card-body">
             <form action="procesar-devolucion.jsp" method="post">
               <input type="hidden" name="prestamoId" value="<%= prestamo.getId() %>">

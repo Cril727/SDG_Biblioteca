@@ -86,14 +86,19 @@
 </nav>
 
 <!-- Registrar Préstamo Form -->
+
+
 <section class="py-5">
   <div class="container">
+    <div class="p-5 mb-4 colorjump rounded-3">
+      <div class="container-fluid py-5 text-center">
+        <h1 class="display-5 fw-bold">Registrar Prestamo</h1>
+        <p>Registrar Prestamo</p>
+      </div>
+    </div>
     <div class="row justify-content-center">
       <div class="col-lg-8">
-        <div class="card shadow">
-          <div class="card-header bg-success text-white">
-            <h3 class="card-title mb-0">Registrar Préstamo</h3>
-          </div>
+
           <div class="card-body">
             <form id="prestamoForm" action="guardar.jsp" method="post">
               <input type="hidden" name="accion" value="registrar">

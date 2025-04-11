@@ -92,12 +92,15 @@
 <!-- Editar Libro Form -->
 <section class="py-5">
     <div class="container">
+        <div class="p-5 mb-4 colorjump rounded-3">
+            <div class="container-fluid py-5 text-center">
+                <h1 class="display-5 fw-bold">Agregar Libro</h1>
+                <p>Agregar Libro</p>
+            </div>
+        </div>
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="card shadow">
-                    <div class="card-header bg-info text-white">
-                        <h3 class="card-title mb-0">Editar Libro</h3>
-                    </div>
                     <div class="card-body">
                         <form id="editarLibroForm" action="guardar.jsp" method="post">
                             <input type="hidden" name="accion" value="editar">
