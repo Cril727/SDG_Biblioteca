@@ -1,5 +1,5 @@
 # Usar la imagen base de Tomcat con JDK 24
-FROM tomcat:11.0.5-jdk24
+FROM tomcat:11-jdk24
 
 # Establecer el directorio de trabajo
 WORKDIR /usr/local/tomcat/webapps
